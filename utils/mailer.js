@@ -6,17 +6,17 @@ exports.sendEmail = async ({ subject = '', html = '' }) => {
 			Messages: [
 				{
 					From: {
-						Email: 'kitanovicandrej213@gmail.com',
+						Email: 'info@putso.nu',
 						Name: 'Putso Website',
 					},
 					To: [
 						{
-							Email: 'info@putso.se',
+							Email: 'info@putso.nu',
 							Name: 'Putso',
 						},
 						{
 							Email: 'kitanovicandrej213@gmail.com',
-							Name: 'Andrej Debugging',
+							Name: 'Andrej [Debugging]',
 						},
 					],
 					Subject: subject,
