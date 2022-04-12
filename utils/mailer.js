@@ -1,5 +1,21 @@
 const mailjet = require('node-mailjet').connect(process.env.MJ_APIKEY_PUBLIC, process.env.MJ_APIKEY_PRIVATE);
 
+exports.getSingleEmail = async (id) => {
+	try {
+		const result = await mailjet.get('message', { version: 'v3' }).id(id).request();
+		console.log(result)
+		return result.body;
+	} catch (err) {}
+};
+
+exports.getEmails = async () => {
+	try {
+		const result = await mailjet.get('message', { version: 'v3' }).request();
+
+		return result.body;
+	} catch (err) {}
+};
+
 exports.sendEmail = async ({ subject = '', html = '' }) => {
 	try {
 		const { result } = await mailjet.post('send', { version: 'v3.1' }).request({
