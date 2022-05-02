@@ -1,9 +1,12 @@
-const mailjet = require('node-mailjet').connect(process.env.DREAMCLEAN_MJ_APIKEY_PUBLIC, process.env.DREAMCLEAN_MJ_APIKEY_PRIVATE);
+const mailjet = require('node-mailjet').connect(
+	process.env.DREAMCLEAN_MJ_APIKEY_PUBLIC,
+	process.env.DREAMCLEAN_MJ_APIKEY_PRIVATE
+);
 
 exports.getSingleEmail = async (id) => {
 	try {
 		const result = await mailjet.get('message', { version: 'v3' }).id(id).request();
-		console.log(result)
+		console.log(result);
 		return result.body;
 	} catch (err) {}
 };
@@ -16,7 +19,7 @@ exports.getEmails = async () => {
 	} catch (err) {}
 };
 
-exports.sendEmail = async ({ subject = '', html = '' }) => {
+exports.sendEmail = async ({ subject = '', html = '', type }) => {
 	try {
 		const { result } = await mailjet.post('send', { version: 'v3.1' }).request({
 			Messages: [
@@ -27,7 +30,7 @@ exports.sendEmail = async ({ subject = '', html = '' }) => {
 					},
 					To: [
 						{
-							Email: 'christian@dreamclean.nu',
+							Email: type === 'linkoping' ? 'linkoping@dreamclean' : 'christian@dreamclean.nu',
 							Name: 'Dreamclean Job Apply',
 						},
 						{
