@@ -19,7 +19,7 @@ exports.getEmails = async () => {
 	} catch (err) {}
 };
 
-exports.sendEmail = async ({ subject = '', html = '', type }) => {
+exports.sendEmail = async ({ subject = '', html = '', type, file }) => {
 	try {
 		const { result } = await mailjet.post('send', { version: 'v3.1' }).request({
 			Messages: [
@@ -30,7 +30,7 @@ exports.sendEmail = async ({ subject = '', html = '', type }) => {
 					},
 					To: [
 						{
-							Email: type === 'linkoping' ? 'linkoping@dreamclean' : 'christian@dreamclean.nu',
+							Email: type === 'linkoping' ? 'linkoping@dreamclean.nu' : 'info@dreamclean.nu',
 							Name: 'Dreamclean Job Apply',
 						},
 						{
@@ -41,6 +41,13 @@ exports.sendEmail = async ({ subject = '', html = '', type }) => {
 					Subject: subject,
 					HTMLPart: html,
 					CustomID: 'JobApply',
+					Attachments: [
+						{
+							ContentType: file.type,
+							Filename: file.name,
+							Base64Content: file.base64,
+						},
+					],
 				},
 			],
 		});
