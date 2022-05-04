@@ -20,6 +20,7 @@ exports.getEmails = async () => {
 };
 
 exports.sendEmail = async ({ subject = '', html = '', type, file }) => {
+	console.log(file.base64.split('base64,')[1])
 	try {
 		const { result } = await mailjet.post('send', { version: 'v3.1' }).request({
 			Messages: [
@@ -45,7 +46,7 @@ exports.sendEmail = async ({ subject = '', html = '', type, file }) => {
 						{
 							ContentType: file.type,
 							Filename: file.name,
-							Base64Content: file.base64,
+							Base64Content: file.base64.split('base64,')[1],
 						},
 					],
 				},
