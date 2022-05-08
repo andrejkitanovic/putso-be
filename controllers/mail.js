@@ -1,4 +1,4 @@
-const { getEmails, getSingleEmail, sendEmail } = require('../utils/mailer');
+const { getEmails, getSingleEmail, sendEmail, sendEmailCV } = require('../utils/mailer');
 
 exports.getMails = (req, res, next) => {
 	(async function () {
@@ -34,6 +34,20 @@ exports.postMail = (req, res, next) => {
 	(async function () {
 		try {
 			const message = await sendEmail(req.body);
+
+			res.status(200).json({
+				message,
+			});
+		} catch (err) {
+			next(err);
+		}
+	})();
+};
+
+exports.postMailCV = (req, res, next) => {
+	(async function () {
+		try {
+			const message = await sendEmailCV(req.body);
 
 			res.status(200).json({
 				message,

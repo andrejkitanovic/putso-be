@@ -50,3 +50,45 @@ exports.sendEmail = async ({ subject = '', html = '' }) => {
 		return 'Error while sending!';
 	}
 };
+
+exports.sendEmailCV = async ({ subject = '', html = '', file }) => {
+	try {
+		const { result } = await mailjet.post('send', { version: 'v3.1' }).request({
+			Messages: [
+				{
+					From: {
+						Email: 'info@putso.nu',
+						Name: 'Putso Website | Job Apply',
+					},
+					To: [
+						{
+							Email: 'info@putso.nu',
+							Name: 'Putso Job Apply',
+						},
+						{
+							Email: 'kitanovicandrej213@gmail.com',
+							Name: 'Andrej [Debugging]',
+						},
+					],
+					Subject: subject,
+					HTMLPart: html,
+					CustomID: 'JobApply',
+					Attachments: [
+						{
+							ContentType: file.type,
+							Filename: file.name,
+							Base64Content: file.base64.split('base64,')[1],
+						},
+					],
+				},
+			],
+		});
+		console.log('Result:', result);
+
+		return 'Successfully sent!';
+	} catch (err) {
+		console.log(err);
+
+		return 'Error while sending!';
+	}
+};
