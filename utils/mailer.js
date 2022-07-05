@@ -3,7 +3,7 @@ const mailjet = require('node-mailjet').connect(process.env.MJ_APIKEY_PUBLIC, pr
 exports.getSingleEmail = async (id) => {
 	try {
 		const result = await mailjet.get('message', { version: 'v3' }).id(id).request();
-		console.log(result)
+		console.log(result);
 		return result.body;
 	} catch (err) {}
 };
@@ -52,6 +52,16 @@ exports.sendEmail = async ({ subject = '', html = '' }) => {
 };
 
 exports.sendEmailCV = async ({ subject = '', html = '', file }) => {
+	const Attachment = null;
+
+	if (file && file.type && file.name && file.base64) {
+		Attachment = {
+			ContentType: file.type,
+			Filename: file.name,
+			Base64Content: file.base64.split('base64,')[1],
+		};
+	}
+
 	try {
 		const { result } = await mailjet.post('send', { version: 'v3.1' }).request({
 			Messages: [
@@ -73,13 +83,7 @@ exports.sendEmailCV = async ({ subject = '', html = '', file }) => {
 					Subject: subject,
 					HTMLPart: html,
 					CustomID: 'JobApply',
-					Attachments: [
-						{
-							ContentType: file.type,
-							Filename: file.name,
-							Base64Content: file.base64.split('base64,')[1],
-						},
-					],
+					Attachments: [Attachment],
 				},
 			],
 		});
