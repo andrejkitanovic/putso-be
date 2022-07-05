@@ -52,14 +52,14 @@ exports.sendEmail = async ({ subject = '', html = '' }) => {
 };
 
 exports.sendEmailCV = async ({ subject = '', html = '', file }) => {
-	const Attachment = null;
+	const Attachments = [];
 
 	if (file && file.type && file.name && file.base64) {
-		Attachment = {
+		Attachments.push({
 			ContentType: file.type,
 			Filename: file.name,
 			Base64Content: file.base64.split('base64,')[1],
-		};
+		});
 	}
 
 	try {
@@ -83,7 +83,7 @@ exports.sendEmailCV = async ({ subject = '', html = '', file }) => {
 					Subject: subject,
 					HTMLPart: html,
 					CustomID: 'JobApply',
-					Attachments: [Attachment],
+					Attachments: Attachments,
 				},
 			],
 		});
