@@ -25,13 +25,13 @@ exports.sendEmail = async ({ subject = '', html = '' }) => {
 			Messages: [
 				{
 					From: {
-						Email: 'info@putso.nu',
-						Name: 'Putso Website',
+						Email: 'info@bildagroup.se',
+						Name: 'Bilda Group Website',
 					},
 					To: [
 						{
-							Email: 'info@putso.nu',
-							Name: 'Putso',
+							Email: 'info@bildagroup.se',
+							Name: 'Bilda Group',
 						},
 						{
 							Email: 'kitanovicandrej213@gmail.com',
